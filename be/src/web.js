@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import { apiRoute, initRoute } from "./routes/router"
 
 const dotenv = require("dotenv").config();
 const app = express()
@@ -13,6 +14,7 @@ app.use(morgan("tiny"));
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
+
 
 app.listen(port, () => {
     // console.log(`Example app listening on port ${port}`)
