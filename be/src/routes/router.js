@@ -1,8 +1,8 @@
-import express from "express";
-const router = express.Router();
+// import express from "express";
+// const router = express.Router();
 
-const initRoute = (app) => {
+// const initRoute = (app) => {
 
 
-    return app.use(router, "/");
-}
+//     return app.use(router, "/");
+// }

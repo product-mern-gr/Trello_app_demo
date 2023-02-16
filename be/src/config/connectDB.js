@@ -1,16 +1,29 @@
-// get the client
-const mysql = require('mysql2');
+import { MongoClient } from "mongodb"
+const dotenv = require("dotenv").config();
 
-// create the connection to database
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'test'
+const client = new MongoClient(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
-// with placeholder
-connection.query(
-    'SELECT * FROM `user` ',
-    function (err, results) {
-        console.log(results);
+
+export const connectDB = async () => {
+    try {
+        await client.connect();
+        await listDatabase(client);
+        console.log("success db");
+
+
+    } catch (err) {
+        console.log(err);
+    } finally {
+        await client.close();
     }
-);
+}
+
+const listDatabase = async (client) => {
+    const databasesList = await client.db().admin().listDatabases();
+    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+}
+
+
+
