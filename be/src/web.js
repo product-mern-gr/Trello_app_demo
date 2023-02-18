@@ -1,27 +1,40 @@
+// import libary 
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+const dotenv = require("dotenv").config();
+// import logic 
 import { apiRoute, initRoute } from "./routes/router"
 import { connectDB } from "./config/connectDB";
-import { connect } from "http2";
 
-const dotenv = require("dotenv").config();
+// local variable
 const app = express()
 const port = process.env.PORT;
 const host = "localhost";
-
+// use middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan("tiny"));
 
-connectDB();
+// connectDB then run server
+connectDB()
+    .then(() => {
+        console.log("Connect database success");
+    }).then(() => {
+        runServer();
+    }).catch((err) => {
+        console.log(err);
+    });
 
-app.get('/', (req, res) => {
-    res.send("hello");
-})
+const runServer = () => {
 
+    app.get('/', (req, res) => {
+        res.send("hello");
+    })
 
-app.listen(port, () => {
-    // console.log(`Example app listening on port ${port}`)
-    console.log(`${host}:${port}`);
-})
+    app.listen(port, () => {
+        // console.log(`Example app listening on port ${port}`)
+        console.log(`${host}:${port}`);
+    })
+
+}
