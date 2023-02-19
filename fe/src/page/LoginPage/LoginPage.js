@@ -1,16 +1,31 @@
 import React from 'react';
 import Button from '../../components/Button/Button';
 import './LoginPage.scss'
-import { BsFillPersonFill } from "react-icons/bs";
+import { FaGoogle, FaMicrosoft, FaApple, FaSlack } from 'react-icons/fa'; 
+import LoginInputForm from '../../components/LoginInputForm/LoginInputForm';
+import './LoginPage.scss'
 
 function LoginPage(props) {
     return (
         <div className='login'>
-            LoginPage
-            <Button text='setting' />
-            <Button text='members' type="transparent" icon={<BsFillPersonFill />} />
-            <Button text='members' type="pink" icon={<BsFillPersonFill />} />
-            <Button text='members' type="white" icon={<BsFillPersonFill />} />
+            <div className='login__wrapper'>
+                <p className='login__title'>Log in to continue</p>
+                <LoginInputForm />
+                <p className='login__subText'>Or</p>
+                <Button className="login__signInWithSocialBtn" text='Google'  icon={<FaGoogle />}/>
+                <Button className="login__signInWithSocialBtn" text='Microsoft' icon={<FaMicrosoft />} />
+                <Button className="login__signInWithSocialBtn" text='Apple' icon={<FaApple />} />
+                <Button className="login__signInWithSocialBtn" text='Slack' icon={<FaSlack />} />
+                <div className='login__link'>
+                    <a href='google.com'>Can't log in?</a>
+                    <a href='google.com' >Create an account</a>
+                </div>
+                <hr />
+                <footer>
+                    <p>One account for Trello, Jira, Confluence and <a href='google.com'>more.</a></p>
+                    <p>Privacy Policy  •  User Notice</p>
+                </footer>
+            </div>
 
         </div>
     );
