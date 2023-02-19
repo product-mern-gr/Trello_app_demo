@@ -1,0 +1,26 @@
+.login__inputForm {
+  width: 100% !important;
+
+  .inputForm__input {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .form-control {
+    border-radius: 3px;
+    border-color: #dfe1e6;
+    font-size: 14px;
+    color: black;
+
+    &::placeholder {
+      font-size: 14px;
+    }
+  }
+
+  .inputForm_submitBtn {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+    border-radius: 3px;
+  }
+}
