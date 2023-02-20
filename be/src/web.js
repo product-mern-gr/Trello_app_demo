@@ -6,7 +6,6 @@ const dotenv = require("dotenv").config();
 // import logic 
 import { apiRoute, initRoute } from "./routes/router"
 import { connectDB } from "./config/connectDB";
-
 // local variable
 const app = express()
 const port = process.env.PORT;
@@ -17,24 +16,12 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 // connectDB then run server
-connectDB()
-    .then(() => {
-        console.log("Connect database success");
-    }).then(() => {
-        runServer();
-    }).catch((err) => {
-        console.log(err);
-    });
+connectDB();
+app.get('/', (req, res) => {
+    res.send("hello");
+})
 
-const runServer = () => {
-
-    app.get('/', (req, res) => {
-        res.send("hello");
-    })
-
-    app.listen(port, () => {
-        // console.log(`Example app listening on port ${port}`)
-        console.log(`${host}:${port}`);
-    })
-
-}
+app.listen(port, () => {
+    // console.log(`Example app listening on port ${port}`)
+    console.log(`${host}:${port}`);
+})
