@@ -1,14 +1,21 @@
-import mongoose from "mongoose"
+import { MongoClient } from "mongodb";
 const dotenv = require("dotenv").config();
 
-export const connectDB = async () => {
-    try {
-        mongoose.set('strictQuery', true);
+let db = null;
 
-        mongoose.connect(process.env.DATABASE_URI, {
-            useNewUrlParser: true
-        })
-    } catch (error) {
-        console.log(error);
-    }
+export const connectDB = async () => {
+    const client = new MongoClient(process.env.DATABASE_URI, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true
+    })
+
+    await client.connect();
+    db = client.db(process.env.DATABASE_NAME);
 }
+
+export const getDB = () => {
+    if (!db) throw new Error("Must connect DB frist");
+    return db;
+}
+
+
