@@ -4,7 +4,7 @@ import { getDB } from "../config/connectDB"
 
 const boardColletion = process.env.COLLECTION_BOARD
 const boardSchema = Joi.object({
-    title: Joi.string().min(1),
+    title: Joi.string().min(5).required(),
     _destroy: Joi.boolean().default(false),
     columnOrder: Joi.array().items(Joi.string().default([]))
 })
@@ -17,10 +17,10 @@ const createNew = async (data) => {
     try {
         const value = await validateSchema(data);
         const result = await getDB().collection(boardColletion).insertOne(value);
-        console.log(result);
+        return result;
     } catch (error) {
         console.log(error);
     }
 }
 
-export const BoardModel = { createNew };
+export const boardModel = { createNew };
