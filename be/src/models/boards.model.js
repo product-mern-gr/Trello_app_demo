@@ -4,7 +4,7 @@ import { getDB } from "../config/connectDB"
 
 const boardColletion = process.env.COLLECTION_BOARD
 const boardSchema = Joi.object({
-    title: Joi.string().min(5).required(),
+    title: Joi.string().min(5).required().trim(),
     _destroy: Joi.boolean().default(false),
     columnOrder: Joi.array().items(Joi.string().default([]))
 })

@@ -1,9 +1,11 @@
 import Joi from "joi";
-import { httpStatus } from "../utilities/httpStatus";
+import { httpStatus } from "../utilities/httpStatus"
 
 const createNew = async (req, res, next) => {
     const condition = Joi.object({
-        title: Joi.string().min(5).required().trim(),
+        title: Joi.string().min(3).required().trim(),
+        boardId: Joi.string().required(),
+        columnId: Joi.string().required()
     })
     try {
         await condition.validateAsync(req.body, { abortEarly: false });
@@ -15,4 +17,4 @@ const createNew = async (req, res, next) => {
     }
 }
 
-export const boardValidation = { createNew }
+export const cardValidation = { createNew }

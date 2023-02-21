@@ -4,8 +4,8 @@ import { getDB } from "../config/connectDB"
 
 const columColletion = process.env.COLLECTION_COLUM
 const columSchema = Joi.object({
-    title: Joi.string().min(1),
-    boardId: Joi.string(),
+    title: Joi.string().min(3).required().trim(),
+    boardId: Joi.string().required(),
     _destroy: Joi.boolean().default(false),
     cardOrder: Joi.array().items(Joi.string().default([]))
 })
@@ -24,4 +24,4 @@ const createNew = async (data) => {
     }
 }
 
-export const columModel = { createNew };
+export const columnModel = { createNew };
