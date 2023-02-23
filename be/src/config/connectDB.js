@@ -11,6 +11,7 @@ export const connectDB = async () => {
 
     await client.connect();
     db = client.db(process.env.DATABASE_NAME);
+
 }
 
 export const getDB = () => {

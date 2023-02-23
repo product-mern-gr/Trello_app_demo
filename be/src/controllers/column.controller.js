@@ -13,4 +13,17 @@ const createNew = async (req, res) => {
     }
 }
 
-export const columnController = { createNew }
+const update = async (req, res) => {
+    try {
+        const id = req.params.id;
+        console.log(id);
+        const result = await columnService.update(id, req.body);
+        res.status(httpStatus.OK).json(result);
+    } catch (error) {
+        res.status(httpStatus.INTERNAL_SERVER).json({
+            errors: error.message
+        })
+    }
+}
+
+export const columnController = { createNew, update }

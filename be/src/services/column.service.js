@@ -9,4 +9,16 @@ const createNew = async (data) => {
     }
 }
 
-export const columnService = { createNew }
+const update = async (id, data) => {
+    try {
+        const update = {
+            ...data
+        }
+        const result = await columnModel.update(id, data);
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
+export const columnService = { createNew, update }
