@@ -48,15 +48,40 @@ const getDataBoard = async (boardId) => {
                     foreignField: "boardId",
                     as: "columns"
                 }
-            }, {
+            },
+            {
                 $lookup: {
                     from: "cards",
                     localField: "_id",
                     foreignField: "boardId",
                     as: "cards"
                 }
-            }]).toArray();
-        console.log(result);
+            },
+            {
+                $addFields: {
+                    columns: {
+                        $map: {
+                            input: "$columns",
+                            as: "column",
+                            in: {
+                                $mergeObjects: [
+                                    "$$column",
+                                    {
+                                        cards: {
+                                            $filter: {
+                                                input: "$cards",
+                                                as: "card",
+                                                cond: { $eq: ["$$card.columnId", "$$column._id"] }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]).toArray();
         return result;
     } catch (error) {
         throw new Error(error);
