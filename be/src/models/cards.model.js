@@ -25,7 +25,12 @@ const createNew = async (data) => {
             columnId: new ObjectId(validateValue.columnId)
         }
         const result = await getDB().collection(cardColletion).insertOne(insertValue);
-        console.log(result);
+
+        const dataInsert = await getDB().collection(cardColletion).findOne(
+            { _id: result.insertedId }
+        );
+
+        return dataInsert;
     } catch (error) {
         throw new Error(error);
     }

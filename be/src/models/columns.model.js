@@ -26,15 +26,29 @@ const createNew = async (data) => {
         }
         const result = await getDB().collection(columnCollection).insertOne(insertValue);
 
-        const insertedDoc = await getDB().collection(columnCollection).findOne(
+        const dataInsert = await getDB().collection(columnCollection).findOne(
             { _id: result.insertedId }
         );
 
-        return insertedDoc;
+        return dataInsert;
     } catch (error) {
         throw new Error(error);
     }
 }
+
+const pushCardOrder = async (columnId, cardId) => {
+    try {
+        const result = await getDB().collection(columnCollection).updateOne(
+            { _id: new ObjectId(columnId) },
+            { $push: { cardOrder: cardId } },
+            { returnOriginal: false }
+        )
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 const update = async (id, data) => {
     try {
         const objectId = new ObjectId(id);
@@ -53,4 +67,4 @@ const update = async (id, data) => {
 }
 
 
-export const columnModel = { createNew, update };
+export const columnModel = { createNew, update, pushCardOrder };
