@@ -24,6 +24,19 @@ const createNew = async (data) => {
     }
 }
 
+const pushColumnOrder = async (boardId, columnId) => {
+    try {
+        const result = await getDB().collection(boardColletion).updateOne(
+            { _id: new ObjectId(boardId) },
+            { $push: { columnOrder: columnId } },
+            { returnOriginal: false }
+        )
+        return result;
+    } catch (error) {
+        throw new Error(error);
+    }
+}
+
 const getDataBoard = async (boardId) => {
     try {
         const result = await getDB().collection(boardColletion).aggregate([
@@ -50,4 +63,4 @@ const getDataBoard = async (boardId) => {
     }
 }
 
-export const boardModel = { createNew, getDataBoard };
+export const boardModel = { createNew, getDataBoard, pushColumnOrder };

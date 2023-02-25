@@ -1,8 +1,10 @@
 import { columnModel } from "../models/columns.model";
+import { boardModel } from "../models/boards.model"
 
 const createNew = async (data) => {
     try {
         const result = await columnModel.createNew(data);
+        await boardModel.pushColumnOrder(result.boardId.toString(), result._id.toString())
         return result;
     } catch (error) {
         throw new Error(error);
