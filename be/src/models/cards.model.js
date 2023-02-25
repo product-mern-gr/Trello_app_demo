@@ -24,10 +24,10 @@ const createNew = async (data) => {
             boardId: new ObjectId(validateValue.boardId),
             columnId: new ObjectId(validateValue.columnId)
         }
-        const result = await getDB().collection(columnCollection).insertOne(insertValue);
+        const result = await getDB().collection(cardColletion).insertOne(insertValue);
         console.log(result);
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 

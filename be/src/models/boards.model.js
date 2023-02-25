@@ -20,24 +20,33 @@ const createNew = async (data) => {
         const result = await getDB().collection(boardColletion).insertOne(value);
         return result;
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 
 const getDataBoard = async (boardId) => {
     try {
-        const result = await getDB().collection(boardColletion).aggregate(
+        const result = await getDB().collection(boardColletion).aggregate([
+            { $match: { _id: new ObjectId(boardId) } },
             {
-                $match: {
-                    _id: new ObjectId(boardId)
+                $lookup: {
+                    from: "columns",
+                    localField: "_id",
+                    foreignField: "boardId",
+                    as: "columns"
                 }
-            }
-        )
-
-
+            }, {
+                $lookup: {
+                    from: "cards",
+                    localField: "_id",
+                    foreignField: "boardId",
+                    as: "cards"
+                }
+            }]).toArray();
+        console.log(result);
         return result;
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 

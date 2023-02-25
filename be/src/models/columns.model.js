@@ -27,7 +27,7 @@ const createNew = async (data) => {
         const result = await getDB().collection(columnCollection).insertOne(insertValue);
         console.log(result);
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 const update = async (id, data) => {
@@ -43,7 +43,7 @@ const update = async (id, data) => {
             return result.value;
         }
     } catch (error) {
-        console.log(error);
+        throw new Error(error);
     }
 }
 

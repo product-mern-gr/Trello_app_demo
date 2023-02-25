@@ -19,4 +19,4 @@ const getDataBoard = async (data) => {
     }
 }
 
-export const boardService = { createNew }
+export const boardService = { createNew, getDataBoard }
