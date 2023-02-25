@@ -1,5 +1,6 @@
 import Joi from "joi";
 const dotenv = require("dotenv").config();
+import { ObjectId } from "mongodb";
 import { getDB } from "../config/connectDB"
 
 const boardColletion = process.env.COLLECTION_BOARD
@@ -23,4 +24,21 @@ const createNew = async (data) => {
     }
 }
 
-export const boardModel = { createNew };
+const getDataBoard = async (boardId) => {
+    try {
+        const result = await getDB().collection(boardColletion).aggregate(
+            {
+                $match: {
+                    _id: new ObjectId(boardId)
+                }
+            }
+        )
+
+
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const boardModel = { createNew, getDataBoard };

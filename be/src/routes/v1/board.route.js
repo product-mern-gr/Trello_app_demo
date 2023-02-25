@@ -8,4 +8,7 @@ router
     .get((req, res) => { console.log("board get") })
     .post(boardValidation.createNew, boardController.createNew)
 
+router
+    .route("/:id")
+    .get(boardController.getDataBoard)
 export const boardRouter = router;

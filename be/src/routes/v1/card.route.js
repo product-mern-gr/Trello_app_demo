@@ -5,7 +5,6 @@ import { cardController } from "../../controllers/card.controlller"
 
 router
     .route("/")
-    .get((req, res) => { console.log("get Card") })
     .post(cardValidation.createNew, cardController.createNew)
 
 export const cardRouter = router;

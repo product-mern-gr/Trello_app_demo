@@ -1,4 +1,5 @@
 import Joi from "joi";
+import { ObjectId } from "mongodb";
 const dotenv = require("dotenv").config();
 import { getDB } from "../config/connectDB"
 
@@ -17,8 +18,13 @@ const validateSchema = async (data) => {
 
 const createNew = async (data) => {
     try {
-        const value = await validateSchema(data);
-        const result = await getDB().collection(cardColletion).insertOne(value);
+        const validateValue = await validateSchema(data);
+        const insertValue = {
+            ...validateValue,
+            boardId: new ObjectId(validateValue.boardId),
+            columnId: new ObjectId(validateValue.columnId)
+        }
+        const result = await getDB().collection(columnCollection).insertOne(insertValue);
         console.log(result);
     } catch (error) {
         console.log(error);

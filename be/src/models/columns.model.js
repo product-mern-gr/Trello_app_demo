@@ -19,8 +19,12 @@ const validateSchema = async (data) => {
 
 const createNew = async (data) => {
     try {
-        const value = await validateSchema(data);
-        const result = await getDB().collection(columnCollection).insertOne(value);
+        const validateValue = await validateSchema(data);
+        const insertValue = {
+            ...validateValue,
+            boardId: new ObjectId(validateValue.boardId)
+        }
+        const result = await getDB().collection(columnCollection).insertOne(insertValue);
         console.log(result);
     } catch (error) {
         console.log(error);

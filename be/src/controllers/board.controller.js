@@ -13,4 +13,15 @@ const createNew = async (req, res) => {
     }
 }
 
-export const boardController = { createNew }
+const getDataBoard = async (req, res) => {
+    try {
+        const result = await boardService.getDataBoard(req.params);
+        res.status(httpStatus.OK).json(result);
+    } catch (error) {
+        res.status(httpStatus.INTERNAL_SERVER).json({
+            errors: error.message
+        })
+    }
+}
+
+export const boardController = { createNew, getDataBoard }
