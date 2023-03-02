@@ -3,6 +3,8 @@ import Button from '../../components/Button/Button';
 import './LoginPage.scss'
 import { FaGoogle, FaMicrosoft, FaApple, FaSlack } from 'react-icons/fa'; 
 import LoginInputForm from '../../components/LoginInputForm/LoginInputForm';
+import './LoginPage.scss'
+import { Link } from 'react-router-dom';
 import logoHeader from '../../assets/trelloLogo-Login.png'
 import logoFooter from '../../assets/footerLogin.png'
 import backgrLeft from '../../assets/trello-backgr-left.svg'
@@ -22,8 +24,9 @@ function LoginPage() {
                 <Button className="login__signInWithSocialBtn" text='Continue with Apple' icon={<FaApple />} />
                 <Button className="login__signInWithSocialBtn" text='Continue with Slack' icon={<FaSlack />} />
                 <div className='login__link'>
-                    <a href='/'>Can't log in?</a>  
-                    <a href='registration'>Create an account</a>
+                    <a href='google.com'>Can't log in?</a>
+                    <Link to={'./registration'} >Create an account</Link>
+
                 </div>
                 <hr />
                 <footer>

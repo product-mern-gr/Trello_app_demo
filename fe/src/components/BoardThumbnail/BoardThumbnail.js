@@ -1,9 +1,21 @@
 import React from 'react';
 import './BoardThumbnail.scss'
+import { useNavigate } from 'react-router';
 
-function BoardThumbnail(props) {
+function BoardThumbnail({
+    board = {title : "ninh"}
+}) {
+
+
+    const slug = '/menu/'+board.title;
+    const navigation = useNavigate();
+
+    const renderMainPage = () => {
+        navigation(slug)
+    }
+
     return (
-        <div className='BoardThumbnail'>
+        <div className='BoardThumbnail' onClick={renderMainPage}>
             <h3 className='BoardThumbnail__title'>
                     GPT3 Project
             </h3>
