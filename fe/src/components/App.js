@@ -5,6 +5,8 @@ import MainPage from "../page/MainPage/MainPage";
 import RegistrationPage from "../page/RegistrationPage/RegistrationPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.scss';
+import Development from "../page/Development/Development";
+
 
 function App() {
   return (
@@ -13,9 +15,13 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
-          <Route  path="/main" element={<MainPage />} />
+          <Route  path="/menu/:slug" element={<MainPage />}/>
+          {/* <Route  path="/main/:slug" element={<MainPage />} /> */}
           <Route  path="/menu" element={<MenuPage />} />
+          <Route  path="/not-found" element={<Development />} />
+          
         </Routes>
+        
       </BrowserRouter>
 
 

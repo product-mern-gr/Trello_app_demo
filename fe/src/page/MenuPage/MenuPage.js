@@ -1,18 +1,24 @@
 import React from 'react';
-import image from '../../assets/image';
-import Button from '../../components/Button/Button';
 import './Menu.scss'
+import Button from '../../components/Button/Button';
 import { FaTrello } from "react-icons/fa";
 import { AiOutlineSetting } from "react-icons/ai";
 import { GiArmorUpgrade } from "react-icons/gi";
-import { BsViewStacked,BsFillPersonFill } from "react-icons/bs";
+import { BsViewStacked, BsFillPersonFill,BsDoorOpen } from "react-icons/bs";
 import BoardThumbnail from '../../components/BoardThumbnail/BoardThumbnail';
 
 
+
 function MenuPage(props) {
+ 
+
+   
     return (
         <div className='menu'>
-            <h1>YOUR WORKSPACES</h1>
+           <div className='menu__header'>
+           <h1>YOUR WORKSPACES</h1>
+           <Button text="logout" icon=<BsDoorOpen /> slug='/'/>
+           </div>
             <div className='menu__content'>
                 <div className='menu__content-header'>
                     <div className='user'>
@@ -26,7 +32,7 @@ function MenuPage(props) {
                     </div>
 
                     <div className='list__button'>
-                        <div className='item__button'>
+                    <div className='item__button'>
                             <Button text="boards" icon=<FaTrello /> />
                         </div>
 
@@ -43,17 +49,17 @@ function MenuPage(props) {
                         </div>
 
                         <div className='item__button'>
-                            <Button text="upgrade" icon=<GiArmorUpgrade /> type = "pink" />
+                            <Button text="upgrade" icon=<GiArmorUpgrade /> type="pink" />
                         </div>
 
-                       
+
                     </div>
 
                 </div>
 
-                <div className='menu__content-main'>
+                <div className='menu__content-main'  >
                     <BoardThumbnail />
-                    <BoardThumbnail />  
+                    <BoardThumbnail />
                     <BoardThumbnail />
                     <BoardThumbnail />
                     <BoardThumbnail />

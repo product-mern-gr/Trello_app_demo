@@ -4,6 +4,9 @@ import './LoginPage.scss'
 import { FaGoogle, FaMicrosoft, FaApple, FaSlack } from 'react-icons/fa'; 
 import LoginInputForm from '../../components/LoginInputForm/LoginInputForm';
 import './LoginPage.scss'
+import { Link } from 'react-router-dom';
+
+
 
 function LoginPage(props) {
     return (
@@ -18,7 +21,7 @@ function LoginPage(props) {
                 <Button className="login__signInWithSocialBtn" text='Slack' icon={<FaSlack />} />
                 <div className='login__link'>
                     <a href='google.com'>Can't log in?</a>
-                    <a href='google.com' >Create an account</a>
+                    <Link to={'./registration'} >Create an account</Link>
                 </div>
                 <hr />
                 <footer>
