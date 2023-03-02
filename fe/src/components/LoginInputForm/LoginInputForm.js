@@ -4,7 +4,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import './LoginInputForm.scss'
 
-function LoginInputForm() {
+function LoginInputForm(props) {
+  const { isRegistrationPage } = props
   const [validated, setValidated] = useState(false)
   const [isEmailDone, setIsEmailDone] = useState(false)
 
@@ -46,9 +47,6 @@ function LoginInputForm() {
           />
           {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
         </Form.Group>
-        { !isEmailDone && 
-          <Button className='inputForm_submitBtn' type='submit' >Continue</Button>
-        }
         { isEmailDone && 
             <Form.Group as={Col} md="4" controlId="validationCustom02" className='inputForm__input'>
               <Form.Control
@@ -59,6 +57,16 @@ function LoginInputForm() {
               />
               {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
             </Form.Group> 
+        }
+        { isRegistrationPage && 
+          <div className='registrationContent'>
+            By signing up, I accept the Atlassian  
+            <a href='google.com'> Cloud Terms of Service </a>
+            and acknowledge the <a href='google.com'>Privacy Policy</a>.
+          </div>
+        }
+        { !isEmailDone && 
+          <Button className='inputForm_submitBtn' type='submit' >Continue</Button>
         }
         { isEmailDone && 
           <Button className='inputForm_submitBtn' type="submit">Log in</Button>
