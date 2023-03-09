@@ -43,7 +43,7 @@ const getDataBoard = async (boardId) => {
             { $match: { _id: new ObjectId(boardId) } },
             {
                 $lookup: {
-                    from: "columns",
+                    from: process.env.COLLECTION_COLUMN,
                     localField: "_id",
                     foreignField: "boardId",
                     as: "columns"
@@ -51,38 +51,14 @@ const getDataBoard = async (boardId) => {
             },
             {
                 $lookup: {
-                    from: "cards",
+                    from: process.env.COLLECTION_CARD,
                     localField: "_id",
                     foreignField: "boardId",
                     as: "cards"
                 }
-            },
-            {
-                $addFields: {
-                    columns: {
-                        $map: {
-                            input: "$columns",
-                            as: "column",
-                            in: {
-                                $mergeObjects: [
-                                    "$$column",
-                                    {
-                                        cards: {
-                                            $filter: {
-                                                input: "$cards",
-                                                as: "card",
-                                                cond: { $eq: ["$$card.columnId", "$$column._id"] }
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
             }
         ]).toArray();
-        return result;
+        return result[0];
     } catch (error) {
         throw new Error(error);
     }
