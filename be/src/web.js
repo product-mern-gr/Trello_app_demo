@@ -7,6 +7,7 @@ const dotenv = require("dotenv").config();
 import { connectDB } from "./config/connectDB";
 import { boardModel } from "./models/boards.model";
 import { apiV1 } from "./routes/v1/initRoute";
+import CorsOptions from "cors";
 // local variable
 const app = express()
 const port = process.env.PORT;
@@ -24,7 +25,9 @@ connectDB().then(() => console.log("connect DB success"))
     })
 
 const runServer = () => {
-
+    // set cors for different local
+    app.use(cors(CorsOptions()))
+    // use route
     app.use("/v1", apiV1);
 
     app.listen(port, () => {

@@ -23,7 +23,7 @@ function LoginInputForm(props) {
         setIsEmailDone(true)
       } else {
         setIsEmailDone(false)
-      } 
+      }
       event.preventDefault();
       event.stopPropagation();
     }
@@ -39,7 +39,7 @@ function LoginInputForm(props) {
     <div>
       <Form className='login__inputForm' noValidate validated={validated} onSubmit={handleSubmit} >
         <Form.Group as={Col} md="4" controlId="validationCustom01" className='inputForm__input'>
-          <Form.Control 
+          <Form.Control
             required
             type="email"
             placeholder="Email..."
@@ -47,28 +47,28 @@ function LoginInputForm(props) {
           />
           {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
         </Form.Group>
-        { isEmailDone && 
-            <Form.Group as={Col} md="4" controlId="validationCustom02" className='inputForm__input'>
-              <Form.Control
-                required
-                type="password"
-                placeholder="Password..."
-                defaultValue=""
-              />
-              {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
-            </Form.Group> 
+        {isEmailDone &&
+          <Form.Group as={Col} md="4" controlId="validationCustom02" className='inputForm__input'>
+            <Form.Control
+              required
+              type="password"
+              placeholder="Password..."
+              defaultValue=""
+            />
+            {/* <Form.Control.Feedback>Looks good!</Form.Control.Feedback> */}
+          </Form.Group>
         }
-        { isRegistrationPage && 
+        {isRegistrationPage &&
           <div className='registrationContent'>
-            By signing up, I accept the Atlassian  
+            By signing up, I accept the Atlassian
             <a href='google.com'> Cloud Terms of Service </a>
             and acknowledge the <a href='google.com'>Privacy Policy</a>.
           </div>
         }
-        { !isEmailDone && 
+        {!isEmailDone &&
           <Button className='inputForm_submitBtn' type='submit' >Continue</Button>
         }
-        { isEmailDone && 
+        {isEmailDone &&
           <Button className='inputForm_submitBtn' type="submit">Log in</Button>
         }
       </Form>

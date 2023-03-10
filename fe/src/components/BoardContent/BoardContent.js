@@ -7,8 +7,8 @@ import './BoardContent.scss'
 import Column from "../Column/Column";
 import { mapOrder } from "../../utilities/sort";
 import { applyDrag } from "../../utilities/dragDrop";
-
 import { initialData } from "../../actions/initialData";
+import { fetchDataBoard } from "../../api/api";
 
 function BoardContent() {
 
@@ -16,12 +16,12 @@ function BoardContent() {
   const [columns, setColumns] = useState([])
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
-  
+
   const newColumnInputRef = useRef(null)
-  
+
   const [newColumnTitle, setNewColumnTitle] = useState('')
   const handleColumnTitleChange = (e) => setNewColumnTitle(e.target.value)
-  
+
   useEffect(() => {
     const boardFromDB = initialData.boards.find(board => board.id === 'board-1')
     if (boardFromDB) {
@@ -29,7 +29,7 @@ function BoardContent() {
       setColumns(mapOrder(boardFromDB.columns, boardFromDB.columnOrder, 'id'))
     }
   }, [])
-  
+
   useEffect(() => {
     if (newColumnInputRef && newColumnInputRef.current) {
       newColumnInputRef.current.focus()
@@ -38,14 +38,14 @@ function BoardContent() {
   }, [openNewColumnForm])
 
   if (isEmpty(board)) {
-    return  <div className="not-found" style={{'padding': '10px', 'color': 'white'}}>Board not found!</div>
+    return <div className="not-found" style={{ 'padding': '10px', 'color': 'white' }}>Board not found!</div>
   }
 
   const onColumnDrop = (dropResult) => {
     let newColumns = [...columns]
     newColumns = applyDrag(newColumns, dropResult)
 
-    let newBoard = {...board}
+    let newBoard = { ...board }
     newBoard.columnOrder = newColumns.map(c => c.id)
     newBoard.columns = newColumns
 
@@ -55,19 +55,19 @@ function BoardContent() {
   }
 
   const onCardDrop = (columnId, dropResult) => {
-    if(dropResult.removedIndex !== null || dropResult.addedIndex !== null){
+    if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
       let newColumns = [...columns]
 
       let currentColumn = newColumns.find(c => c.id === columnId)
       currentColumn.cards = applyDrag(currentColumn.cards, dropResult)
-      currentColumn.cardOrder = currentColumn.cards.map(i => i.id )
+      currentColumn.cardOrder = currentColumn.cards.map(i => i.id)
 
       setColumns(newColumns)
     }
   }
 
   const addNewColumn = () => {
-    if(!newColumnTitle) {
+    if (!newColumnTitle) {
       newColumnInputRef.current.focus()
       return
     }
@@ -83,7 +83,7 @@ function BoardContent() {
     let newColumns = [...columns]
     newColumns.push(newColumnToAdd)
 
-    let newBoard = {...board}
+    let newBoard = { ...board }
     newBoard.columnOrder = newColumns.map(c => c.id)
     newBoard.columns = newColumns
 
@@ -97,7 +97,7 @@ function BoardContent() {
     const columnIdToUpdate = newColumnToUpdate.id
 
     let newColumns = [...columns]
-    const columnIndexToUpdate = newColumns.findIndex(i => i.id === columnIdToUpdate) 
+    const columnIndexToUpdate = newColumns.findIndex(i => i.id === columnIdToUpdate)
 
     if (newColumnToUpdate._destroy) {
       //remove column
@@ -107,7 +107,7 @@ function BoardContent() {
       newColumns.splice(columnIndexToUpdate, 1, newColumnToUpdate)
     }
 
-    let newBoard = {...board}
+    let newBoard = { ...board }
     newBoard.columnOrder = newColumns.map(c => c.id)
     newBoard.columns = newColumns
 
@@ -122,22 +122,22 @@ function BoardContent() {
   return (
     <div className='board-content'>
       <Container
-          orientation="horizontal"
-          onDrop={onColumnDrop}
-          dragHandleSelector=".column-drag-handle"
-          getChildPayload={index => columns[index]}
-          dropPlaceholder={{
-            animationDuration: 150,
-            showOnTop: true,
-            className: 'column-drop-preview'
-          }}
+        orientation="horizontal"
+        onDrop={onColumnDrop}
+        dragHandleSelector=".column-drag-handle"
+        getChildPayload={index => columns[index]}
+        dropPlaceholder={{
+          animationDuration: 150,
+          showOnTop: true,
+          className: 'column-drop-preview'
+        }}
       >
         {columns.map((column, index) => (
           <Draggable key={index}>
-            <Column 
-              column={column} 
-              onCardDrop={onCardDrop} 
-              onUpdateColumn={onUpdateColumn} 
+            <Column
+              column={column}
+              onCardDrop={onCardDrop}
+              onUpdateColumn={onUpdateColumn}
               onAddNewCardToColumn={onAddNewCardToColumn}
             />
           </Draggable>
@@ -145,20 +145,20 @@ function BoardContent() {
       </Container>
 
       <BootstrapContainer className="clone-trello-container">
-        {!openNewColumnForm && 
+        {!openNewColumnForm &&
           <Row>
             <Col className="add-new-column" onClick={toggleOpenNewColumnForm}>
               <i className="fa fa-plus icon" /> Add another card
             </Col>
           </Row>
         }
-        {openNewColumnForm && 
+        {openNewColumnForm &&
           <Row>
             <Col className="enter-new-column">
-              <Form.Control 
-                size="sm" 
-                type="text" 
-                placeholder="Enter column title..." 
+              <Form.Control
+                size="sm"
+                type="text"
+                placeholder="Enter column title..."
                 className="input-enter-new-column"
                 ref={newColumnInputRef}
                 value={newColumnTitle}
