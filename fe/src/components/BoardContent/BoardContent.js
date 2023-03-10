@@ -8,7 +8,7 @@ import Column from "../Column/Column";
 import { mapOrder } from "../../utilities/sort";
 import { applyDrag } from "../../utilities/dragDrop";
 import { initialData } from "../../actions/initialData";
-import { fetchDataBoard } from "../../api";
+import { fetchDataBoard, createNewColumn } from "../../api";
 
 function BoardContent() {
 
@@ -73,24 +73,23 @@ function BoardContent() {
     }
 
     const newColumnToAdd = {
-      id: Math.random().toString(36).substring(2, 5), //5 random characters will removed when we implement code api
       boardId: board._id,
-      title: newColumnTitle.trim(),
-      cardOrder: [],
-      cards: []
+      title: newColumnTitle.trim()
     }
 
-    let newColumns = [...columns]
-    newColumns.push(newColumnToAdd)
+    createNewColumn(newColumnToAdd).then(column => {
+      let newColumns = [...columns]
+      newColumns.push(column)
 
-    let newBoard = { ...board }
-    newBoard.columnOrder = newColumns.map(c => c._id)
-    newBoard.columns = newColumns
+      let newBoard = { ...board }
+      newBoard.columnOrder = newColumns.map(c => c._id)
+      newBoard.columns = newColumns
 
-    setColumns(newColumns)
-    setBoard(newBoard)
-    setNewColumnTitle('')
-    toggleOpenNewColumnForm()
+      setColumns(newColumns)
+      setBoard(newBoard)
+      setNewColumnTitle('')
+      toggleOpenNewColumnForm()
+    })
   }
 
   const onUpdateColumn = (newColumnToUpdate) => {

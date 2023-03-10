@@ -4,6 +4,7 @@ import { boardModel } from "../models/boards.model"
 const createNew = async (data) => {
     try {
         const result = await columnModel.createNew(data);
+        result.cards = [];
         await boardModel.pushColumnOrder(result.boardId.toString(), result._id.toString())
         return result;
     } catch (error) {

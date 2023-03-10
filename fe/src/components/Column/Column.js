@@ -9,6 +9,7 @@ import ConfirmModal from "../Common/ConfirmModal";
 import { mapOrder } from "../../utilities/sort";
 import { MODAL_ACTION_CONFIRM } from "../../utilities/constants";
 import { saveContentAfterPressEnter, selectAllInlineText } from "../../utilities/contentEditable";
+import { createNewCard } from "../../api";
 
 function Column(props) {
 
@@ -45,20 +46,20 @@ function Column(props) {
     }
 
     const newCardToAdd = {
-      id: Math.random().toString(36).substring(2, 5), //5 random characters will removed when we implement code api
       boardId: column.boardId,
       columnId: column._id,
-      title: newCardTitle.trim(),
-      cover: null
+      title: newCardTitle.trim()
     }
+    // call api
+    createNewCard(newCardToAdd).then(card => {
+      let newColumn = cloneDeep(column)
+      newColumn.cards.push(card)
+      newColumn.cardOrder.push(card._id)
 
-    let newColumn = cloneDeep(column)
-    newColumn.cards.push(newCardToAdd)
-    newColumn.cardOrder.push(newCardToAdd._id)
-
-    onAddNewCardToColumn(newColumn)
-    setNewCardTitle('')
-    toggleOpenNewCardForm()
+      onAddNewCardToColumn(newColumn)
+      setNewCardTitle('')
+      toggleOpenNewCardForm()
+    })
   }
 
   useEffect(() => {
