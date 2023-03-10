@@ -29,8 +29,8 @@ function Column(props) {
     const newColumn = {
       ...column,
       title: columnTitle
-    }    
-    onUpdateColumn(newColumn)  
+    }
+    onUpdateColumn(newColumn)
   }
 
   const newCardTextareaRef = useRef(null)
@@ -39,28 +39,28 @@ function Column(props) {
   const handleCardTitleChange = (e) => setNewCardTitle(e.target.value)
 
   const addNewCard = () => {
-    if(!newCardTitle) {
+    if (!newCardTitle) {
       newCardTextareaRef.current.focus()
       return
     }
-    
+
     const newCardToAdd = {
       id: Math.random().toString(36).substring(2, 5), //5 random characters will removed when we implement code api
       boardId: column.boardId,
-      columnId: column.id,
+      columnId: column._id,
       title: newCardTitle.trim(),
       cover: null
     }
 
     let newColumn = cloneDeep(column)
     newColumn.cards.push(newCardToAdd)
-    newColumn.cardOrder.push(newCardToAdd.id)
+    newColumn.cardOrder.push(newCardToAdd._id)
 
     onAddNewCardToColumn(newColumn)
     setNewCardTitle('')
     toggleOpenNewCardForm()
   }
-  
+
   useEffect(() => {
     setColumnTitle(column.title)
   }, [column.title]);
@@ -77,8 +77,8 @@ function Column(props) {
       const newColumn = {
         ...column,
         _destroy: true,
-      }    
-      onUpdateColumn(newColumn)  
+      }
+      onUpdateColumn(newColumn)
     }
     toggleShowConfirmModal()
   }
@@ -87,10 +87,10 @@ function Column(props) {
     <div className='column'>
       <header className="column-drag-handle">
         <div className="column-title">
-          <Form.Control 
-            size="sm" 
-            type="text" 
-            placeholder="Enter column title..." 
+          <Form.Control
+            size="sm"
+            type="text"
+            placeholder="Enter column title..."
             className="trello-content-editable"
             value={columnTitle}
             onChange={handleColumnTitleChange}
@@ -115,33 +115,33 @@ function Column(props) {
         </div>
       </header>
       <div className="card-list">
-      <Container
-        orientation="vertical" //default
-        groupName="col"
-        onDrop={dropResult => onCardDrop(column.id, dropResult)}
-        getChildPayload={index => cards[index]}
-        dragClass="card-ghost"
-        dropClass="card-ghost-drop"
-        dropPlaceholder={{
-          animationDuration: 150,
-          showOnTop: true,
-          className: 'card-drop-preview' 
-        }}
-        dropPlaceholderAnimationDuration={200}
+        <Container
+          orientation="vertical" //default
+          groupName="col"
+          onDrop={dropResult => onCardDrop(column._id, dropResult)}
+          getChildPayload={index => cards[index]}
+          dragClass="card-ghost"
+          dropClass="card-ghost-drop"
+          dropPlaceholder={{
+            animationDuration: 150,
+            showOnTop: true,
+            className: 'card-drop-preview'
+          }}
+          dropPlaceholderAnimationDuration={200}
         >
-        {cards.map((card, index) => (
-          <Draggable key={index}>
-            <Card card={card} />
-          </Draggable>
-        ))}
+          {cards.map((card, index) => (
+            <Draggable key={index}>
+              <Card card={card} />
+            </Draggable>
+          ))}
         </Container>
-        {openNewCardForm && 
+        {openNewCardForm &&
           <div className="add-new-card-area">
-            <Form.Control 
-              size="sm" 
-              as="textarea" 
+            <Form.Control
+              size="sm"
+              as="textarea"
               rows="3"
-              placeholder="Enter a title for this card..." 
+              placeholder="Enter a title for this card..."
               className="textarea-enter-new-card"
               ref={newCardTextareaRef}
               value={newCardTitle}
@@ -152,7 +152,7 @@ function Column(props) {
         }
       </div>
       <footer>
-      {openNewCardForm && 
+        {openNewCardForm &&
           <div className="add-new-card-actions">
             <Button variant="success" size="sm" onClick={addNewCard}>Add card</Button>
             <span className="cancle-icon" onClick={toggleOpenNewCardForm}>
@@ -167,13 +167,13 @@ function Column(props) {
         }
       </footer>
 
-      <ConfirmModal 
+      <ConfirmModal
         show={showConfirmModal}
         onAction={onConfirmModalAction}
         title="Remove column"
         content={`Are you sure you want to remove <strong>${column.title}</strong>!<br>All related cards will also be removed!`}
       ></ConfirmModal>
-    </div>    
+    </div>
   )
 }
 

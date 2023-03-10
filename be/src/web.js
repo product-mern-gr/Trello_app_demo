@@ -25,8 +25,7 @@ connectDB().then(() => console.log("connect DB success"))
     })
 
 const runServer = () => {
-    // set cors for different local
-    app.use(cors(CorsOptions()))
+
     // use route
     app.use("/v1", apiV1);
 
